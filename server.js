@@ -27,7 +27,7 @@ app.get("/api/wallpapers", (req, res) => {
 });
 
 // Serve images statically
-app.use("/wallpapers", express.static(wallpapersDir));
+app.use("public/wallpapers", express.static(wallpapersDir));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
