@@ -19,7 +19,7 @@ app.get("/api/wallpapers", (req, res) => {
       .filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file)) // Only image files
       .map(file => ({
         title: path.basename(file, path.extname(file)), // Remove extension
-        url: `/wallpapers/${file}`,  // Correct URL path for static files
+        url: `https://wallpaper-api-41jy.onrender.com/api/wallpapers/${file}`,  // Correct URL path for static files
       }));
 
     res.json(wallpapers);
@@ -27,7 +27,7 @@ app.get("/api/wallpapers", (req, res) => {
 });
 
 // Serve images statically from the /wallpapers route
-app.use("/wallpapers", express.static(wallpapersDir));  // Corrected path
+app.use("/api/wallpapers", express.static(wallpapersDir));  // Corrected path
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
