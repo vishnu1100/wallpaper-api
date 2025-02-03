@@ -1,0 +1,14 @@
+name: Keep  API Active
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'  # Every 5 minutes
+  workflow_dispatch:  # Allows manual execution of the workflow
+
+jobs:
+  keep-alive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send GET request to keep server active
+        run: |
+          curl -X GET https://wallpaper-api-41jy.onrender.com/api/wallpapers
