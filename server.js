@@ -56,15 +56,5 @@ app.get("/api/wallpapers", (req, res) => {
 // Serve images statically from the /wallpapers route
 app.use("/api/wallpapers", express.static(wallpapersDir));  // Corrected path
 
-// POST endpoint to upload new wallpaper
-app.post("/api/upload", upload.single("wallpaper"), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ error: "No file uploaded" });
-  }
-
-  // Send a success response with the image file name
-  res.json({ message: "Wallpaper uploaded successfully", file: req.file.originalname });
-});
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
