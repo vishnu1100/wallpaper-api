@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Wallpaper</title>
+</head>
+<body>
+  <h1>Upload a Wallpaper</h1>
+
+  <form id="upload-form" enctype="multipart/form-data">
+    <input type="file" name="wallpaper" required />
+    <button type="submit">Upload</button>
+  </form>
+
+  <script>
+    const form = document.getElementById("upload-form");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch("https://wallpaper-api-41jy.onrender.com/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert(`Wallpaper uploaded successfully: ${result.file}`);
+        } else {
+          alert(`Error: ${result.error}`);
+        }
+      } catch (error) {
+        console.error("Upload failed:", error);
+        alert("Failed to upload wallpaper.");
+      }
+    });
+  </script>
+</body>
+</html>
