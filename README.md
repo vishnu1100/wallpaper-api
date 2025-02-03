@@ -1,14 +1,13 @@
-## Free wallpaper-api Hosted onrender 
-
-
-### Local Testing : http://localhost:3000/api/wallpapers
-
-
 
 # Wallpaper API Documentation
 
 ## Base URL:
-All endpoints can be accessed at `https://wallpaper-api-41jy.onrender.com/api/wallpapers`.
+All endpoints can be accessed at `https://wallpaper-api-41jy.onrender.com/`.
+
+Local Testing : `http://localhost:3000/api/wallpapers`
+
+
+
 
 ---
 

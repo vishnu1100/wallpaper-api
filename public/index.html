@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Wallpaper API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        main {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        code {
+            display: block;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: "Courier New", monospace;
+            margin: 10px 0;
+            word-wrap: break-word;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            margin-bottom: 15px;
+        }
+        .endpoint {
+            background-color: #e9f5fe;
+            border-radius: 4px;
+            padding: 10px;
+        }
+        .response {
+            background-color: #f3f3f3;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .note {
+            font-style: italic;
+            color: #777;
+        }
+        .header, .example {
+            color: #444;
+        }
+        .example {
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 style="color: white;" > Wallpaper API Documentation </h1>
+    <p>Version 1.0 - Hosted on Render</p>
+</header>
+
+<main>
+    <section>
+        <h2 class="header">Base URL</h2>
+        <p>All endpoints can be accessed at <code>https://wallpaper-api-41jy.onrender.com/api/wallpapers</code>.</p>
+    </section>
+
+    <section class="endpoint">
+        <h2>1. GET /api/wallpapers</h2>
+        <p>Fetches the list of wallpapers available in the <code>/api/wallpapers</code> directory. It returns the image metadata (title and URL) for each wallpaper.</p>
+
+        <h3 class="response">Response:</h3>
+        <p><strong>Status Code:</strong> 200 OK</p>
+        <p><strong>Content-Type:</strong> application/json</p>
+        <pre>
+[
+  {
+    "title": "sunset",
+    "url": "https://<your-project-id>.onrender.com/api/wallpapers/sunset.jpg"
+  },
+  {
+    "title": "mountains",
+    "url": "https://<your-project-id>.onrender.com/api/wallpapers/mountains.jpg"
+}
+        </pre>
+
+        <p class="note">Only image files with extensions <code>.jpg</code>, <code>.jpeg</code>, <code>.png</code>, and <code>.webp</code> are returned.</p>
+    </section>
+
+    <section class="endpoint">
+        <h2>2. POST /api/upload</h2>
+        <p>Uploads a new wallpaper image to the <code>public/wallpapers/</code> directory. The uploaded image will be accessible through the <code>/api/wallpapers</code> endpoint.</p>
+
+        <h3 class="response">Request:</h3>
+        <p><strong>Method:</strong> POST</p>
+        <p><strong>Content-Type:</strong> multipart/form-data</p>
+        <p><strong>Form Field Name:</strong> <code>wallpaper</code></p>
+        <p><strong>Body:</strong> A single image file.</p>
+
+        <h3 class="example">Example Request (cURL):</h3>
+        <pre>
+curl -X POST https://<your-project-id>.onrender.com/api/upload -F "wallpaper=@/path/to/your/image.jpg"
+        </pre>
+
+        <h3 class="response">Response:</h3>
+        <p><strong>Status Code:</strong> 200 OK (if the upload is successful)</p>
+        <pre>
+{
+  "message": "Wallpaper uploaded successfully",
+  "file": "image.jpg"
+}
+        </pre>
+
+        <p><strong>Status Code:</strong> 400 Bad Request (if no file is provided)</p>
+        <pre>
+{
+  "error": "No file uploaded"
+}
+        </pre>
+        <p class="note">The image will be stored in the <code>public/wallpapers/</code> folder with its original filename.</p>
+    </section>
+
+    <section class="endpoint">
+        <h2>3. Static File Serving</h2>
+        <p>Images uploaded via the <code>POST /api/upload</code> endpoint, or existing images, can be accessed directly using their URL. The images are served statically from the <code>public/wallpapers</code> folder.</p>
+
+        <h3 class="response">URL Pattern:</h3>
+        <p><code>/api/wallpapers/&lt;image-name&gt;</code></p>
+
+        <h3 class="example">Example:</h3>
+        <p>To view the <code>10.png</code> image:</p>
+        <code>https://wallpaper-api-41jy.onrender.com/api/wallpapers/10.png</code>
+
+        <p class="note">The images are served with their original filename. Only files with extensions <code>.jpg</code>, <code>.jpeg</code>, <code>.png</code>, and <code>.webp</code> are supported.</p>
+    </section>
+
+    <section>
+        <h2>Example Workflow</h2>
+        <ol>
+            <li><strong>Upload a Wallpaper:</strong> Send a POST request to <code>/api/upload</code> with the image file.</li>
+            <li><strong>View Wallpapers:</strong> Send a GET request to <code>/api/wallpapers</code> to get the list of wallpapers and display them in your app.</li>
+            <li><strong>Access Uploaded Wallpapers:</strong> Access individual images via their URL, e.g., <code>https://<your-project-id>.onrender.com/api/wallpapers/sunset.jpg</code>.</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>Deployment</h2>
+        <p><strong>Firebase Functions Deployment:</strong> Ensure your functions are deployed with the correct configuration. Run the following command to deploy your API:</p>
+        <pre>firebase deploy --only functions</pre>
+
+        <p><strong>Firebase Hosting Deployment:</strong> Ensure static files (wallpapers) are served from the <code>public/wallpapers</code> directory.</p>
+    </section>
+
+    <section>
+        <h2>File Structure</h2>
+        <pre>
+/wallpaper-app
+│── /functions
+│   ├── /node_modules
+│   ├── index.js
+│   ├── server.js
+│   ├── package.json
+│── /public
+│   ├── /wallpapers
+│   ├── index.html
+│   ├── upload.html
+│   ├── styles.css
+│   ├── script.js
+│── firebase.json
+        </pre>
+    </section>
+
+    <section>
+        <h2>Installation & Setup</h2>
+        <ol>
+            <li><strong>Install dependencies:</strong>
+                <pre>npm install express multer cors</pre>
+            </li>
+            <li><strong>Run the API locally (for testing):</strong>
+                <pre>node server.js</pre>
+            </li>
+            <li><strong>Deploy to Firebase (Optional):</strong>
+                <ul>
+                    <li>Deploy Functions using <code>firebase deploy --only functions</code>.</li>
+                    <li>Deploy Hosting using <code>firebase deploy --only hosting</code>.</li>
+                </ul>
+            </li>
+        </ol>
+    </section>
+</main>
+
+<footer>
+    <p>Wallpaper API Documentation - Contribute <a href="https://github.com/vishnu1100/wallpaper-api" target="_blank" style="color: cyan;">here</a></p>
+</footer>
+
+</body>
+</html>

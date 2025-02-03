@@ -24,6 +24,17 @@ const upload = multer({ storage });
 // Path to the wallpapers directory
 const wallpapersDir = path.join(__dirname, "public/wallpapers");
 
+
+
+// Serve the index.html page at the root route
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, '/public/index.html')); // Adjust the path to where your index.html is located
+});
+
+
+
+
+
 // API endpoint to get wallpapers dynamically
 app.get("/api/wallpapers", (req, res) => {
   fs.readdir(wallpapersDir, (err, files) => {
