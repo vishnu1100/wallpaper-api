@@ -9,6 +9,7 @@ Local Testing : `http://localhost:3000/api/wallpapers`
 
 
 
+
 ---
 
 ## 1. GET /api/wallpapers
