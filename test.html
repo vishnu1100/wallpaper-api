@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wallpaper App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #wallpaper-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .wallpaper {
+            width: 250px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+
+        .wallpaper:hover {
+            transform: scale(1.05);
+        }
+
+        #api-url {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Wallpaper App</h1>
+    <p>Fetching from API: <span id="api-url">Loading...</span></p>
+    <div id="wallpaper-container"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            // Get the API URL from the query string
+            const urlParams = new URLSearchParams(window.location.search);
+            const apiUrl = urlParams.get("api") || "https://<your-project-id>.cloudfunctions.net/api/wallpapers"; // Default to Firebase Function URL
+
+            // Display the API URL on the page
+            document.getElementById("api-url").textContent = apiUrl;
+
+            try {
+                // Fetch wallpapers from the API
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error("Failed to fetch wallpapers");
+
+                const wallpapers = await response.json();
+                const container = document.getElementById("wallpaper-container");
+
+                // Display each wallpaper as an image
+                wallpapers.forEach(wallpaper => {
+                    const img = document.createElement("img");
+                    img.src = wallpaper.url;
+                    img.alt = wallpaper.title;
+                    img.className = "wallpaper";
+                    container.appendChild(img);
+                });
+            } catch (error) {
+                console.error("Error loading wallpapers:", error);
+                document.getElementById("wallpaper-container").innerHTML = "<p>Failed to load wallpapers.</p>";
+            }
+        });
+    </script>
+</body>
+</html>
