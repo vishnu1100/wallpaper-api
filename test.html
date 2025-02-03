@@ -51,7 +51,7 @@
         document.addEventListener("DOMContentLoaded", async () => {
             // Get the API URL from the query string
             const urlParams = new URLSearchParams(window.location.search);
-            const apiUrl = urlParams.get("api") || "https://wallpaper-api-41jy.onrender.com/api/wallpapers"; // Default to onrender Function URL
+            const apiUrl = urlParams.get("api") || "http://localhost:3000/api/wallpapers"; // Default to onrender Function URL
 
             // Display the API URL on the page
             document.getElementById("api-url").textContent = apiUrl;
