@@ -10,7 +10,7 @@
             text-align: center;
             margin: 0;
             padding: 20px;
-            background-color: #f4f4f4;
+            background-color: grey;
         }
 
         h1 {
@@ -26,7 +26,7 @@
         }
 
         .wallpaper {
-            width: 250px;
+            width: 550px;
             height: auto;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -43,8 +43,8 @@
     </style>
 </head>
 <body>
-    <h1>Wallpaper App</h1>
-    <p>Fetching from API: <span id="api-url">Loading...</span></p>
+   
+   
     <div id="wallpaper-container"></div>
 
     <script>
@@ -54,7 +54,7 @@
             const apiUrl = urlParams.get("api") || "https://wallpaper-api-41jy.onrender.com/api/wallpapers"; // Default to onrender Function URL
 
             // Display the API URL on the page
-            document.getElementById("api-url").textContent = apiUrl;
+           
 
             try {
                 // Fetch wallpapers from the API
