@@ -65,7 +65,7 @@ app.get("/api/wallpapers/mobile", (req, res) => {
       .filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file)) // Only image files
       .map(file => ({
         title: path.basename(file, path.extname(file)), // Remove extension
-        url: `https://wallpaper-api-41jy.onrender.com/api/wallpapers/mobile${file}`,  // Correct URL path for static files
+        url: `https://wallpaper-api-41jy.onrender.com/api/wallpapers/mobile/${file}`,  // Correct URL path for static files
       }));
 
     res.json(wallpapers);
