@@ -23,6 +23,7 @@ const upload = multer({ storage });
 
 // Path to the wallpapers directory
 const wallpapersDir = path.join(__dirname, "public/wallpapers");
+const mobwallpapersDir = path.join(__dirname, "public/mobile");
 
 
 
@@ -53,8 +54,27 @@ app.get("/api/wallpapers", (req, res) => {
   });
 });
 
+// API endpoint to get wallpapers dynamically
+app.get("/api/wallpapers/mobile", (req, res) => {
+  fs.readdir(mobwallpapersDir, (err, files) => {
+    if (err) {
+      return res.status(500).json({ error: "Failed to read wallpapers" });
+    }
+
+    const wallpapers = files
+      .filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file)) // Only image files
+      .map(file => ({
+        title: path.basename(file, path.extname(file)), // Remove extension
+        url: `https://wallpaper-api-41jy.onrender.com/api/wallpapers/mobile${file}`,  // Correct URL path for static files
+      }));
+
+    res.json(wallpapers);
+  });
+});
+
 // Serve images statically from the /wallpapers route
 app.use("/api/wallpapers", express.static(wallpapersDir));  // Corrected path
+app.use("/api/wallpapers/mobile", express.static(mobwallpapersDir));  // Corrected path
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
