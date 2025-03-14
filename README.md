@@ -2,7 +2,7 @@
 # Wallpaper API Documentation
 
 ## Base URL:
-All endpoints can be accessed at `https://wallpaper-api-41jy.onrender.com/`.
+All endpoints can be accessed at `https://wallpaper-api-ih1w.onrender.com/`.
 
 Local Testing : `http://localhost:3000/api/wallpapers`
 
